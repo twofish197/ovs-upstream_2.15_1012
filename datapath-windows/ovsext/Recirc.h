@@ -54,6 +54,7 @@ OvsProcessDeferredActions(POVS_SWITCH_CONTEXT switchContext,
 POVS_DEFERRED_ACTION
 OvsAddDeferredActions(PNET_BUFFER_LIST packet,
                       OvsFlowKey *key,
+                      POVS_PACKET_HDR_INFO layers,
                       const PNL_ATTR actions);
 
 /*
