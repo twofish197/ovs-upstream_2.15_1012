@@ -282,7 +282,7 @@ OvsAddDeferredActions(PNET_BUFFER_LIST nbl,
 {
     POVS_DEFERRED_ACTION_QUEUE queue = OvsDeferredActionsQueueGet();
     POVS_DEFERRED_ACTION deferredAction = NULL;
-    OVS_PACKET_HDR_INFO layers_init = { 0 };
+    OVS_PACKET_HDR_INFO layersInit = { 0 };
 
     deferredAction = OvsDeferredActionsQueuePush(queue);
     if (deferredAction) {
@@ -292,7 +292,7 @@ OvsAddDeferredActions(PNET_BUFFER_LIST nbl,
         if (layers) {
             deferredAction->layers = *layers;
         } else {
-            deferredAction->layers = layers_init;
+            deferredAction->layers = layersInit;
         }
     }
 
@@ -316,14 +316,14 @@ OvsProcessDeferredActions(POVS_SWITCH_CONTEXT switchContext,
     NDIS_STATUS status = NDIS_STATUS_SUCCESS;
     POVS_DEFERRED_ACTION_QUEUE queue = OvsDeferredActionsQueueGet();
     POVS_DEFERRED_ACTION deferredAction = NULL;
-    POVS_PACKET_HDR_INFO layers_curr = NULL;
+    POVS_PACKET_HDR_INFO layersDeferred = NULL;
 
     /* Process all deferred actions. */
     while ((deferredAction = OvsDeferredActionsQueuePop(queue)) != NULL) {
         if (layers) {
-            layers_curr = layers;
+            layersDeferred = layers;
          } else {
-            layers_curr = &(deferredAction->layers);
+            layersDeferred = &(deferredAction->layers);
          }
 
         if (deferredAction->actions) {
@@ -333,7 +333,7 @@ OvsProcessDeferredActions(POVS_SWITCH_CONTEXT switchContext,
                                          portNo,
                                          sendFlags,
                                          &deferredAction->key, NULL,
-                                         layers_curr, deferredAction->actions,
+                                         layersDeferred, deferredAction->actions,
                                          NlAttrGetSize(deferredAction->actions));
         } else {
             status = OvsDoRecirc(switchContext,
@@ -341,7 +341,7 @@ OvsProcessDeferredActions(POVS_SWITCH_CONTEXT switchContext,
                                  deferredAction->nbl,
                                  &deferredAction->key,
                                  portNo,
-                                 layers_curr);
+                                 layersDeferred);
         }
     }
 
