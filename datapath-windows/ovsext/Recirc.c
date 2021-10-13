@@ -282,7 +282,7 @@ OvsAddDeferredActions(PNET_BUFFER_LIST nbl,
 {
     POVS_DEFERRED_ACTION_QUEUE queue = OvsDeferredActionsQueueGet();
     POVS_DEFERRED_ACTION deferredAction = NULL;
-    OVS_PACKET_HDR_INFO layers_zero = { 0 };
+    OVS_PACKET_HDR_INFO layers_init = { 0 };
 
     deferredAction = OvsDeferredActionsQueuePush(queue);
     if (deferredAction) {
@@ -292,7 +292,7 @@ OvsAddDeferredActions(PNET_BUFFER_LIST nbl,
         if (layers) {
             deferredAction->layers = *layers;
         } else {
-            deferredAction->layers = layers_zero;
+            deferredAction->layers = layers_init;
         }
     }
 
@@ -320,10 +320,10 @@ OvsProcessDeferredActions(POVS_SWITCH_CONTEXT switchContext,
 
     /* Process all deferred actions. */
     while ((deferredAction = OvsDeferredActionsQueuePop(queue)) != NULL) {
-        if ((deferredAction->layers).l3Offset) {
-            layers_curr = &(deferredAction->layers);
-         } else {
+        if (layers) {
             layers_curr = layers;
+         } else {
+            layers_curr = &(deferredAction->layers);
          }
 
         if (deferredAction->actions) {
