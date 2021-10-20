@@ -674,7 +674,7 @@ _FlowNlDumpCmdHandler(POVS_USER_PARAMS_CONTEXT usrParamsCtx,
         if (!(dumpOutput.n)) {
             BOOLEAN ok;
 
-            OVS_LOG_INFO("Dump Done");
+            /*OVS_LOG_INFO("Dump Done");*/
 
             nlMsgOutHdr = (PNL_MSG_HDR)(NlBufAt(&nlBuf, NlBufSize(&nlBuf), 0));
             ok = NlFillNlHdr(&nlBuf, NLMSG_DONE, NLM_F_MULTI,

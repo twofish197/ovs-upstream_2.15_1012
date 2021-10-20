@@ -1637,9 +1637,10 @@ OvsCompleteNBL(PVOID switch_ctx,
 
     ASSERT(ctx && ctx->magic == OVS_CTX_MAGIC);
 
+/*
     OVS_LOG_TRACE("Enter: nbl: %p, ctx: %p, refCount: %d, updateRef:%d",
                  nbl, ctx, ctx->refCount, updateRef);
-
+*/
     if (updateRef) {
         value = InterlockedDecrement((LONG volatile *)&ctx->refCount);
         if (value != 0) {

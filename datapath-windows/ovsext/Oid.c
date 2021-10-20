@@ -371,9 +371,10 @@ OvsExtOidRequest(NDIS_HANDLE filterModuleContext,
     struct _METHOD *methodInfo = &(oidRequest->DATA.METHOD_INFORMATION);
     BOOLEAN completeOid = FALSE;
     ULONG bytesNeeded = 0;
-
+/*
     OVS_LOG_TRACE("Enter: oidRequest %p, reqType: %d",
                   oidRequest, oidRequest->RequestType);
+*/
     status = NdisAllocateCloneOidRequest(switchObject->NdisFilterHandle,
                                          oidRequest, OVS_MEMORY_TAG,
                                          &clonedOidRequest);
@@ -423,7 +424,7 @@ OvsExtOidRequest(NDIS_HANDLE filterModuleContext,
     }
 
 done:
-    OVS_LOG_TRACE("Exit: status %8x.", status);
+   /* OVS_LOG_TRACE("Exit: status %8x.", status);*/
     return status;
 }
 
@@ -444,10 +445,10 @@ OvsExtOidRequestComplete(NDIS_HANDLE filterModuleContext,
     /* Only one of the two should be set */
     ASSERT(origReq != NULL || oidContext != NULL);
     ASSERT(oidContext != NULL || origReq != NULL);
-
+/*
     OVS_LOG_TRACE("Enter: oidRequest %p, reqType: %d",
                   oidRequest, oidRequest->RequestType);
-
+*/
     if (origReq == NULL) {
         NdisInterlockedDecrement(&(switchObject->pendingOidCount));
         oidContext->status = status;
@@ -482,7 +483,9 @@ OvsExtOidRequestComplete(NDIS_HANDLE filterModuleContext,
     NdisInterlockedDecrement(&(switchObject->pendingOidCount));
 
 done:
+/*
     OVS_LOG_TRACE("Exit");
+*/
 }
 
 static VOID
@@ -558,13 +561,13 @@ OvsOidRequestCompleteQuery(POVS_SWITCH_CONTEXT switchObject,
     struct _QUERY *queryInfo = &((oidRequest->DATA).QUERY_INFORMATION);
     struct _QUERY *origQueryInfo = &((origOidRequest->DATA).QUERY_INFORMATION);
 
-    OVS_LOG_TRACE("Enter: oidRequest %p, Oid: %lu",
+/*    OVS_LOG_TRACE("Enter: oidRequest %p, Oid: %lu",
                   oidRequest, queryInfo->Oid);
-
+*/
     origQueryInfo->BytesWritten = queryInfo->BytesWritten;
     origQueryInfo->BytesNeeded = queryInfo->BytesNeeded;
 
-    OVS_LOG_TRACE("Exit");
+  /*  OVS_LOG_TRACE("Exit");*/
 }
 
 /*
