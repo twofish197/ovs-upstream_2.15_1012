@@ -483,9 +483,8 @@ OvsExtOidRequestComplete(NDIS_HANDLE filterModuleContext,
     NdisInterlockedDecrement(&(switchObject->pendingOidCount));
 
 done:
-/*
-    OVS_LOG_TRACE("Exit");
-*/
+    /*OVS_LOG_TRACE("Exit");*/
+    return;
 }
 
 static VOID
@@ -501,15 +500,15 @@ OvsOidRequestCompleteMethod(POVS_SWITCH_CONTEXT switchObject,
     struct _METHOD *origMethodInfo = &(origOidRequest->DATA.
                                        METHOD_INFORMATION);
 
-    OVS_LOG_TRACE("Enter: oidRequest %p, Oid: %lu",
-                  oidRequest, methodInfo->Oid);
+    /*OVS_LOG_TRACE("Enter: oidRequest %p, Oid: %lu",
+                  oidRequest, methodInfo->Oid);*/
 
     origMethodInfo->OutputBufferLength = methodInfo->OutputBufferLength;
     origMethodInfo->BytesRead = methodInfo->BytesRead;
     origMethodInfo->BytesNeeded = methodInfo->BytesNeeded;
     origMethodInfo->BytesWritten = methodInfo->BytesWritten;
 
-    OVS_LOG_TRACE("Exit");
+    /*OVS_LOG_TRACE("Exit");*/
 }
 
 static VOID
