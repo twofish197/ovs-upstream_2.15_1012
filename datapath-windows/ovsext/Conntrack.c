@@ -515,7 +515,7 @@ OvsDetectCtPacket(OvsForwardingContext *fwdCtx,
             || key->ipKey.nwProto == IPPROTO_ICMP) {
             return NDIS_STATUS_SUCCESS;
         }
-        OVS_LOG_ERROR("Not supported: nwProto %u", key->ipKey.nwProto);
+        /*OVS_LOG_ERROR("Not supported: nwProto %u", key->ipKey.nwProto);*/
         break;
     case ETH_TYPE_IPV6:
         OVS_LOG_ERROR("Not supported: Ipv6");

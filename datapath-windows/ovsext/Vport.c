@@ -2404,8 +2404,8 @@ OvsNewVportCmdHandler(POVS_USER_PARAMS_CONTEXT usrParamsCtx,
                                    gOvsSwitchContext->dpNo);
 
     *replyLen = msgOut->nlMsg.nlmsgLen;
-    OVS_LOG_INFO("Created new vport, name: %s, type: %u", vport->ovsName,
-                 vport->ovsType);
+    OVS_LOG_INFO("Created new vport, name: %s, id %x, type: %u", vport->ovsName,
+                 vport->portId, vport->ovsType);
 
 Cleanup:
     NdisReleaseRWLock(gOvsSwitchContext->dispatchLock, &lockState);
