@@ -156,6 +156,9 @@ OvsProcessSetOidPort(POVS_SWITCH_CONTEXT switchObject,
     if (OvsCheckOidHeader((PNDIS_OBJECT_HEADER)portParam,
                            NDIS_SWITCH_PORT_PARAMETERS_REVISION_1)) {
         status = NDIS_STATUS_NOT_SUPPORTED;
+        OVS_LOG_TRACE("NDIS_STATUS_NOT_SUPPORTED, Oid: %lu, PortId: %x",
+                     setInfo->Oid, portParam->PortId);
+
         goto done;
     }
 
@@ -164,8 +167,13 @@ OvsProcessSetOidPort(POVS_SWITCH_CONTEXT switchObject,
          * to validate and verify settings. We must skip handling them,
          * and return STATUS_SUCCESS as the OID result
          */
+        OVS_LOG_TRACE("NDIS_STATUS_SUCCESS, Oid: %lu, PortId: %x",
+                     setInfo->Oid, portParam->PortId);
         return NDIS_STATUS_SUCCESS;
     }
+
+    OVS_LOG_TRACE("Oid need process, Oid: %lu, PortId: %x",
+	           setInfo->Oid, portParam->PortId);
 
     switch(setInfo->Oid) {
     case OID_SWITCH_PORT_CREATE:
@@ -199,9 +207,13 @@ OvsProcessSetOidNic(POVS_SWITCH_CONTEXT switchObject,
     if (OvsCheckOidHeader((PNDIS_OBJECT_HEADER)nicParam,
                            NDIS_SWITCH_NIC_PARAMETERS_REVISION_1)) {
         status = NDIS_STATUS_NOT_SUPPORTED;
+        OVS_LOG_TRACE("NDIS_STATUS_NOT_SUPPORTED, Oid: %lu, PortId: %x",
+                     setInfo->Oid, nicParam->PortId);
         goto done;
     }
 
+    OVS_LOG_TRACE("need process, Oid: %lu, PortId: %x",
+                  setInfo->Oid, nicParam->PortId);
     switch(setInfo->Oid) {
     case OID_SWITCH_NIC_CREATE:
         status = HvCreateNic(switchObject, nicParam);
@@ -379,6 +391,7 @@ OvsExtOidRequest(NDIS_HANDLE filterModuleContext,
                                          oidRequest, OVS_MEMORY_TAG,
                                          &clonedOidRequest);
     if (status != NDIS_STATUS_SUCCESS) {
+        OVS_LOG_TRACE("failure, not success, goto done");
         goto done;
     }
 
