@@ -17,11 +17,14 @@
 #include "precomp.h"
 
 #include "Debug.h"
+/*
 #ifdef DBG
 #define OVS_DBG_DEFAULT  OVS_DBG_INFO
 #else
 #define OVS_DBG_DEFAULT  OVS_DBG_ERROR
 #endif
+*/
+#define OVS_DBG_DEFAULT  OVS_DBG_INFO
 
 UINT32  ovsLogFlags = 0xffffffff;
 UINT32  ovsLogLevel = OVS_DBG_DEFAULT;
