@@ -173,7 +173,7 @@ OvsProcessSetOidPort(POVS_SWITCH_CONTEXT switchObject,
     }
 
     OVS_LOG_TRACE("Oid need process, Oid: %lu, PortId: %x",
-	           setInfo->Oid, portParam->PortId);
+                  setInfo->Oid, portParam->PortId);
 
     switch(setInfo->Oid) {
     case OID_SWITCH_PORT_CREATE:
